@@ -20,14 +20,16 @@ products.forEach((product) => {
           <div class="product-rating-container">
             <img
               class="product-rating-stars"
-              src="images/ratings/rating-${product.rating.value * 10}.png"
+              src="images/ratings/rating-${product.rating.stars * 10}.png"
             />
             <div class="product-rating-count link-primary">${
               product.rating.count
             }</div>
           </div>
 
-          <div class="product-price">$${(product.price / 100).toFixed(2)}</div>
+          <div class="product-price">$${(product.priceCents / 100).toFixed(
+            2
+          )}</div>
 
           <div class="product-quantity-container">
             <select>
