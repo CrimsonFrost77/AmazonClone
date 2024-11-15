@@ -86,6 +86,20 @@ function addToCart(productId) {
   }
 }
 
+function updateCartQuantityDisplay() {
+  //update cart quantity display top right
+  const cartQuantityDisplay = document.querySelector(".js-cart-quantity");
+  let cartQuantity = 0;
+
+  cart.forEach((cartItem) => {
+    cartQuantity += cartItem.quantity;
+  });
+
+  cartQuantityDisplay.textContent = cartQuantity;
+}
+
+function updateAddedElement(productId) {}
+
 //cart functionality
 const addToCartButtons = document.querySelectorAll(".js-add-to-cart");
 // Store timeouts for each product
@@ -97,10 +111,6 @@ addToCartButtons.forEach((button) => {
     const { productId } = button.dataset;
 
     addToCart(productId);
-
-    //getting the quantity in the select element
-    //and the added to cart element
-    //using the product id taken from the button element
 
     const addedElement = document.querySelector(
       `.js-added-to-cart-${productId}`
@@ -118,14 +128,6 @@ addToCartButtons.forEach((button) => {
       addedElement.classList.remove("added-to-cart-visible");
     }, 2000);
 
-    //update cart quantity display top right
-    const cartQuantityDisplay = document.querySelector(".js-cart-quantity");
-    let cartQuantity = 0;
-
-    cart.forEach((cartItem) => {
-      cartQuantity += cartItem.quantity;
-    });
-
-    cartQuantityDisplay.textContent = cartQuantity;
+    updateCartQuantityDisplay();
   });
 });
