@@ -48,7 +48,7 @@ products.forEach((product) => {
 
           <div class="product-spacer"></div>
 
-          <div class="added-to-cart">
+          <div class="added-to-cart js-added-to-cart-${product.id}">
             <img src="images/icons/checkmark.png" />
             Added
           </div>
@@ -66,9 +66,17 @@ const addToCartButtons = document.querySelectorAll(".js-add-to-cart");
 
 addToCartButtons.forEach((button) => {
   button.addEventListener("click", () => {
+    //get product id value from the button's data-product-id attribute
     const { productId } = button.dataset;
+
+    //getting the quantity in the select element
+    //and the added to cart element
+    //using the product id taken from the button element
     const selectElement = document.querySelector(
       `.js-quantity-selector-${productId}`
+    );
+    const addedElement = document.querySelector(
+      `.js-added-to-cart-${productId}`
     );
 
     let matchingItem;
@@ -87,6 +95,13 @@ addToCartButtons.forEach((button) => {
         quantity: Number(selectElement.value),
       });
     }
+
+    //show added to cart message for 1.5 seconds
+    addedElement.classList.add("added-to-cart-visible");
+    setTimeout(() => {
+      addedElement.classList.remove("added-to-cart-visible");
+    }, 1500);
+
     //update cart quantity display top right
     const cartQuantityDisplay = document.querySelector(".js-cart-quantity");
     let cartQuantity = 0;
