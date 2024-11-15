@@ -1,6 +1,6 @@
 const productsGrid = document.querySelector(".js-products-grid");
 
-//generate products HTML from the products array
+//generate products HTML from the products array in products.js
 let productsHTML = "";
 
 products.forEach((product) => {
@@ -53,8 +53,45 @@ products.forEach((product) => {
             Added
           </div>
 
-          <button class="add-to-cart-button button-primary js-add-to-cart">Add to Cart</button>
+          <button class="add-to-cart-button button-primary js-add-to-cart" data-product-id="${
+            product.id
+          }" >Add to Cart</button>
         </div>`;
 });
 
 productsGrid.innerHTML = productsHTML;
+
+//cart functionality
+const addToCartButtons = document.querySelectorAll(".js-add-to-cart");
+
+addToCartButtons.forEach((button) => {
+  button.addEventListener("click", () => {
+    const productId = button.dataset.productId;
+
+    let matchingItem;
+    cart.forEach((item) => {
+      if (item.productId === productId) {
+        matchingItem = item;
+        return;
+      }
+    });
+
+    if (matchingItem) {
+      matchingItem.quantity += 1;
+    } else {
+      cart.push({
+        productId: productId,
+        quantity: 1,
+      });
+    }
+    //update cart quantity display top right
+    const cartQuantityDisplay = document.querySelector(".js-cart-quantity");
+    let count = 0;
+
+    cart.forEach((item) => {
+      count += item.quantity;
+    });
+
+    cartQuantityDisplay.textContent = count;
+  });
+});
