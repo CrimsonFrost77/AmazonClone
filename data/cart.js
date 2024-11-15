@@ -1,1 +1,23 @@
 export const cart = [];
+
+export function addToCart(productId) {
+  const selectElement = document.querySelector(
+    `.js-quantity-selector-${productId}`
+  );
+  let matchingItem;
+  cart.forEach((cartItem) => {
+    if (cartItem.productId === productId) {
+      matchingItem = cartItem;
+      return;
+    }
+  });
+
+  if (matchingItem) {
+    matchingItem.quantity += Number(selectElement.value);
+  } else {
+    cart.push({
+      productId,
+      quantity: Number(selectElement.value),
+    });
+  }
+}

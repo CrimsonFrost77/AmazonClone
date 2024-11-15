@@ -1,4 +1,4 @@
-import { cart } from "../data/cart.js";
+import { cart, addToCart } from "../data/cart.js";
 import { products } from "../data/products.js";
 
 const productsGrid = document.querySelector(".js-products-grid");
@@ -63,28 +63,6 @@ products.forEach((product) => {
 });
 
 productsGrid.innerHTML = productsHTML;
-
-function addToCart(productId) {
-  const selectElement = document.querySelector(
-    `.js-quantity-selector-${productId}`
-  );
-  let matchingItem;
-  cart.forEach((cartItem) => {
-    if (cartItem.productId === productId) {
-      matchingItem = cartItem;
-      return;
-    }
-  });
-
-  if (matchingItem) {
-    matchingItem.quantity += Number(selectElement.value);
-  } else {
-    cart.push({
-      productId,
-      quantity: Number(selectElement.value),
-    });
-  }
-}
 
 function updateCartQuantityDisplay() {
   //update cart quantity display top right
