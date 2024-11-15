@@ -469,4 +469,26 @@ const products = [
     priceCents: 2400,
     keywords: ["sweaters", "hoodies", "apparel", "mens"],
   },
+  {
+    id: "idumbrellachata",
+    image: "images/products/umbrella.jpg",
+    name: "Folding Travel Umbrella, Automatic Open & Close Ergonomic Handle, Golf Umbrella 10 Ribs Brolly Portable Slim Strong Lightweight Umbrella",
+    rating: {
+      stars: 4,
+      count: 297,
+    },
+    priceCents: 849,
+    keywords: ["Umbrella", "Golf Umbrella", "Strong Lightweight Umbrella"],
+  },
+  {
+    id: "idbagbackpack",
+    image: "images/products/backpack.jpg",
+    name: "Laptop Travel Backpack Mens women's Water Resistant Anti-Theft Bag with USB Charging Port and Lock 15.6 Inch Computer Business",
+    rating: {
+      stars: 4.5,
+      count: 32509,
+    },
+    priceCents: 3399,
+    keywords: ["bag", "pack", "school bag", "travel bag", "backpack"],
+  },
 ];
