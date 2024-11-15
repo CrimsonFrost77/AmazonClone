@@ -98,7 +98,21 @@ function updateCartQuantityDisplay() {
   cartQuantityDisplay.textContent = cartQuantity;
 }
 
-function updateAddedElement(productId) {}
+function updateAddedElement(productId) {
+  const addedElement = document.querySelector(`.js-added-to-cart-${productId}`);
+
+  // Clear existing timeout for this specific product
+  if (addedMessageTimeoutIDs[productId]) {
+    clearTimeout(addedMessageTimeoutIDs[productId]);
+  }
+
+  addedElement.classList.add("added-to-cart-visible");
+
+  // Store new timeout for this product
+  addedMessageTimeoutIDs[productId] = setTimeout(() => {
+    addedElement.classList.remove("added-to-cart-visible");
+  }, 2000);
+}
 
 //cart functionality
 const addToCartButtons = document.querySelectorAll(".js-add-to-cart");
@@ -112,21 +126,7 @@ addToCartButtons.forEach((button) => {
 
     addToCart(productId);
 
-    const addedElement = document.querySelector(
-      `.js-added-to-cart-${productId}`
-    );
-
-    // Clear existing timeout for this specific product
-    if (addedMessageTimeoutIDs[productId]) {
-      clearTimeout(addedMessageTimeoutIDs[productId]);
-    }
-
-    addedElement.classList.add("added-to-cart-visible");
-
-    // Store new timeout for this product
-    addedMessageTimeoutIDs[productId] = setTimeout(() => {
-      addedElement.classList.remove("added-to-cart-visible");
-    }, 2000);
+    updateAddedElement(productId);
 
     updateCartQuantityDisplay();
   });
