@@ -1,4 +1,4 @@
-export const cart = [];
+export const cart = JSON.parse(localStorage.getItem("cart")) || [];
 
 export function addToCart(productId) {
   const selectElement = document.querySelector(
@@ -20,4 +20,5 @@ export function addToCart(productId) {
       quantity: Number(selectElement.value),
     });
   }
+  localStorage.setItem("cart", JSON.stringify(cart));
 }

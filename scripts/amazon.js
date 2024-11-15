@@ -109,3 +109,5 @@ addToCartButtons.forEach((button) => {
     updateCartQuantityDisplay();
   });
 });
+
+updateCartQuantityDisplay();
