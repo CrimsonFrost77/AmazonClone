@@ -1,3 +1,5 @@
+import { cart } from "../data/cart.js";
+
 const productsGrid = document.querySelector(".js-products-grid");
 
 //generate products HTML from the products array in products.js
