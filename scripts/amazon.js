@@ -63,6 +63,7 @@ productsGrid.innerHTML = productsHTML;
 
 //cart functionality
 const addToCartButtons = document.querySelectorAll(".js-add-to-cart");
+let addedMessageTimeoutID;
 
 addToCartButtons.forEach((button) => {
   button.addEventListener("click", () => {
@@ -96,11 +97,14 @@ addToCartButtons.forEach((button) => {
       });
     }
 
-    //show added to cart message for 1.5 seconds
+    //show added to cart message for 2 seconds
     addedElement.classList.add("added-to-cart-visible");
-    setTimeout(() => {
+    if (addedMessageTimeoutID) {
+      clearTimeout(addedMessageTimeoutID);
+    }
+    addedMessageTimeoutID = setTimeout(() => {
       addedElement.classList.remove("added-to-cart-visible");
-    }, 1500);
+    }, 2000);
 
     //update cart quantity display top right
     const cartQuantityDisplay = document.querySelector(".js-cart-quantity");
