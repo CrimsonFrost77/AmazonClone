@@ -2,19 +2,32 @@ import { cart } from "../data/cart.js";
 import { products } from "../data/products.js";
 
 let productsHTML = "";
+generateCartContentHTML(productsHTML);
 
-cart.forEach((cartItem) => {
-  let matchingItem;
-  //find the cartItem product in products array
-  products.forEach((product) => {
-    if (product.id === cartItem.productId) {
-      matchingItem = product;
-      return;
-    }
+//add event listeners to update and delete quantity links
+deleteButton.forEach((button) => {
+  button.addEventListener("click", () => {
+    const { productId } = button.dataset;
+    removeFromCart(productId);
+    generateCartContentHTML(productsHTML);
   });
+});
 
-  //generate products HTML for checkout page
-  productsHTML += `
+//generate cart content HTML
+//takes in the initial products HTML string
+function generateCartContentHTML(productsHTML) {
+  cart.forEach((cartItem) => {
+    let matchingItem;
+    //find the cartItem product in products array
+    products.forEach((product) => {
+      if (product.id === cartItem.productId) {
+        matchingItem = product;
+        return;
+      }
+    });
+
+    //generate products HTML for checkout page
+    productsHTML += `
           <div class="cart-item-container">
             <div class="delivery-date">
               Delivery date: Tuesday, June 21
@@ -40,7 +53,9 @@ cart.forEach((cartItem) => {
                   <span class="update-quantity-link link-primary">
                     Update
                   </span>
-                  <span class="delete-quantity-link link-primary">
+                  <span class="delete-quantity-link link-primary data-product-id="${
+                    cartItem.productId
+                  }">
                     Delete
                   </span>
                 </div>
@@ -93,8 +108,9 @@ cart.forEach((cartItem) => {
             </div>
           </div>
   `;
-});
+  });
 
-const cartItemsContainer = document.querySelector(".js-order-summary");
+  const cartItemsContainer = document.querySelector(".js-order-summary");
 
-cartItemsContainer.innerHTML = productsHTML;
+  cartItemsContainer.innerHTML = productsHTML;
+}

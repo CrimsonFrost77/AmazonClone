@@ -22,3 +22,12 @@ export function addToCart(productId) {
   }
   localStorage.setItem("cart", JSON.stringify(cart));
 }
+
+export function removeFromCart(productId) {
+  cart.forEach((cartItem, index) => {
+    if (cartItem.productId === productId) {
+      cart.splice(index, 1);
+    }
+  });
+  localStorage.setItem("cart", JSON.stringify(cart));
+}
