@@ -1,5 +1,5 @@
 // Purpose: To store the cart data and functions to add and remove items from the cart.
-export let cart = JSON.parse(localStorage.getItem("cart")) || [];
+export const cart = JSON.parse(localStorage.getItem("cart")) || [];
 
 // Add the product matching productId to the cart
 export function addToCart(productId) {
@@ -30,6 +30,7 @@ export function removeFromCart(productId) {
   cart.forEach((cartItem, index) => {
     if (cartItem.productId === productId) {
       cart.splice(index, 1);
+      document.querySelector(`.js-cart-item-container-${productId}`).remove();
     }
   });
   updateCheckoutCartQuantityDisplay();

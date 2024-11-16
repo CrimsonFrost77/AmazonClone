@@ -4,6 +4,8 @@ import { formatCurrency } from "./utils/money.js";
 
 const productsGrid = document.querySelector(".js-products-grid");
 
+updateCartQuantityDisplay();
+
 //generate products HTML from the products array in products.js
 let productsHTML = "";
 

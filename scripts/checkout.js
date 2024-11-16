@@ -8,8 +8,7 @@ import { formatCurrency } from "./utils/money.js";
 
 let productsHTML = "";
 generateCartContentHTML(productsHTML);
-attachEventListeners(); // Initial attachment
-
+attachEventListeners(); //attachment of event listeners
 updateCheckoutCartQuantityDisplay();
 
 function attachEventListeners() {
@@ -19,13 +18,6 @@ function attachEventListeners() {
     button.addEventListener("click", () => {
       const productId = button.dataset.productId;
       removeFromCart(productId);
-
-      // Reset productsHTML and regenerate content
-      productsHTML = "";
-      generateCartContentHTML(productsHTML);
-
-      // Reattach event listeners to new buttons
-      attachEventListeners();
     });
   });
 }
@@ -45,7 +37,9 @@ function generateCartContentHTML(productsHTML) {
 
     //generate products HTML for checkout page
     productsHTML += `
-          <div class="cart-item-container">
+          <div class="cart-item-container js-cart-item-container-${
+            cartItem.productId
+          }">
             <div class="delivery-date">
               Delivery date: Tuesday, June 21
             </div>
