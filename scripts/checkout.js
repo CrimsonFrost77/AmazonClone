@@ -3,17 +3,25 @@ import { products } from "../data/products.js";
 
 let productsHTML = "";
 generateCartContentHTML(productsHTML);
+attachEventListeners(); // Initial attachment
 
-const deleteButton = document.querySelectorAll(".delete-quantity-link");
+function attachEventListeners() {
+  const deleteButtons = document.querySelectorAll(".delete-quantity-link");
 
-//add event listeners to update and delete quantity links
-deleteButton.forEach((button) => {
-  button.addEventListener("click", () => {
-    const { productId } = button.dataset;
-    removeFromCart(productId);
-    generateCartContentHTML(productsHTML);
+  deleteButtons.forEach((button) => {
+    button.addEventListener("click", () => {
+      const productId = button.dataset.productId;
+      removeFromCart(productId);
+
+      // Reset productsHTML and regenerate content
+      productsHTML = "";
+      generateCartContentHTML(productsHTML);
+
+      // Reattach event listeners to new buttons
+      attachEventListeners();
+    });
   });
-});
+}
 
 //generate cart content HTML
 //takes in the initial products HTML string
@@ -55,7 +63,7 @@ function generateCartContentHTML(productsHTML) {
                   <span class="update-quantity-link link-primary">
                     Update
                   </span>
-                  <span class="delete-quantity-link link-primary data-product-id="${
+                  <span class="delete-quantity-link link-primary" data-product-id="${
                     cartItem.productId
                   }">
                     Delete
