@@ -34,3 +34,12 @@ export function removeFromCart(productId) {
   });
   localStorage.setItem("cart", JSON.stringify(cart));
 }
+
+export function getCartQuantityTotal() {
+  let cartQuantity = 0;
+
+  cart.forEach((cartItem) => {
+    cartQuantity += cartItem.quantity;
+  });
+  return cartQuantity;
+}
