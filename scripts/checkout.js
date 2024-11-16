@@ -4,6 +4,8 @@ import { products } from "../data/products.js";
 let productsHTML = "";
 generateCartContentHTML(productsHTML);
 
+const deleteButton = document.querySelectorAll(".delete-quantity-link");
+
 //add event listeners to update and delete quantity links
 deleteButton.forEach((button) => {
   button.addEventListener("click", () => {
