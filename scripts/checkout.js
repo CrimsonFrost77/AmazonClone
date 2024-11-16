@@ -1,4 +1,8 @@
-import { cart, removeFromCart, getCartQuantityTotal } from "../data/cart.js";
+import {
+  cart,
+  removeFromCart,
+  updateCheckoutCartQuantityDisplay,
+} from "../data/cart.js";
 import { products } from "../data/products.js";
 import { formatCurrency } from "./utils/money.js";
 
@@ -6,8 +10,7 @@ let productsHTML = "";
 generateCartContentHTML(productsHTML);
 attachEventListeners(); // Initial attachment
 
-document.querySelector(".js-return-home-link-quantity").innerText =
-  getCartQuantityTotal();
+updateCheckoutCartQuantityDisplay();
 
 function attachEventListeners() {
   const deleteButtons = document.querySelectorAll(".delete-quantity-link");

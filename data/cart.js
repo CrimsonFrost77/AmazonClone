@@ -1,5 +1,5 @@
 // Purpose: To store the cart data and functions to add and remove items from the cart.
-export const cart = JSON.parse(localStorage.getItem("cart")) || [];
+export let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
 // Add the product matching productId to the cart
 export function addToCart(productId) {
@@ -32,6 +32,7 @@ export function removeFromCart(productId) {
       cart.splice(index, 1);
     }
   });
+  updateCheckoutCartQuantityDisplay();
   localStorage.setItem("cart", JSON.stringify(cart));
 }
 
@@ -42,4 +43,9 @@ export function getCartQuantityTotal() {
     cartQuantity += cartItem.quantity;
   });
   return cartQuantity;
+}
+
+export function updateCheckoutCartQuantityDisplay() {
+  document.querySelector(".js-return-home-link-quantity").innerText =
+    getCartQuantityTotal();
 }
