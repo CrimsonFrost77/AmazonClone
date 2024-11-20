@@ -13,6 +13,14 @@ updateCheckoutCartQuantityDisplay();
 
 function attachEventListeners() {
   const deleteButtons = document.querySelectorAll(".delete-quantity-link");
+  const updateLinks = document.querySelectorAll(".js-update-quantity-link");
+
+  updateLinks.forEach((link) => {
+    link.addEventListener("click", () => {
+      const productId = link.dataset.productId;
+      console.log("productId", productId);
+    });
+  });
 
   deleteButtons.forEach((button) => {
     button.addEventListener("click", () => {
@@ -61,7 +69,9 @@ function generateCartContentHTML(productsHTML) {
                       cartItem.quantity
                     }</span>
                   </span>
-                  <span class="update-quantity-link link-primary js-update-quantity-link">
+                  <span class="update-quantity-link link-primary js-update-quantity-link" data-product-id="${
+                    matchingItem.id
+                  }">
                     Update
                   </span>
                   <span class="delete-quantity-link link-primary" data-product-id="${
