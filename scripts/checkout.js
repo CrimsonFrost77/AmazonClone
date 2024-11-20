@@ -61,7 +61,7 @@ function generateCartContentHTML(productsHTML) {
                       cartItem.quantity
                     }</span>
                   </span>
-                  <span class="update-quantity-link link-primary">
+                  <span class="update-quantity-link link-primary js-update-quantity-link">
                     Update
                   </span>
                   <span class="delete-quantity-link link-primary" data-product-id="${
