@@ -19,6 +19,12 @@ function attachEventListeners() {
     link.addEventListener("click", () => {
       const productId = link.dataset.productId;
       console.log("productId", productId);
+
+      const cartItemContainer = document.querySelector(
+        `js-cart-item-container-${productId}`
+      );
+
+      cartItemContainer.classList.add("is-editing-quantity");
     });
   });
 
@@ -74,6 +80,10 @@ function generateCartContentHTML(productsHTML) {
                   }">
                     Update
                   </span>
+                  <input type="number" class="quantity-input js-quantity-input" min="1" max="200"/>
+                  <span class="save-quantity-link link-primary js-save-quantity-link" data-product-id="${
+                    matchingItem.id
+                  }">Save</span>
                   <span class="delete-quantity-link link-primary" data-product-id="${
                     cartItem.productId
                   }">

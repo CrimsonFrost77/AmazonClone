@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Input Examples</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        padding: 20px;
+        background-color: rgb(153, 153, 153);
+        color: white;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Basic text input -->
+    <input type="text" name="username" placeholder="Enter username" />
+
+    <!-- Popular input types -->
+    <input type="password" name="pwd" />
+    <!-- Password field with hidden characters -->
+    <input type="email" required />
+    <!-- Email validation built-in -->
+    <input type="number" min="0" max="100" />
+    <!-- Numeric input with range -->
+    <input type="checkbox" checked />
+    <!-- Toggle checkbox -->
+    <input type="radio" name="choice" />
+    <!-- Radio button -->
+    <input type="file" accept=".pdf,.doc" />
+    <!-- File upload -->
+    <input type="date" />
+    <!-- Date picker -->
+    <input type="color" />
+    <!-- Color picker -->
+    <input type="search" />
+    <!-- Search box -->
+
+    <!-- Common attributes -->
+    <input
+      type="text"
+      name="field1"
+      id="uniqueId"
+      required
+      disabled
+      readonly
+      maxlength="50"
+      placeholder="Hint text"
+      pattern="[A-Za-z]+"
+      autocomplete="off"
+    />
+  </body>
+</html>
