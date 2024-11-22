@@ -2,6 +2,7 @@ import {
   cart,
   removeFromCart,
   updateCheckoutCartQuantityDisplay,
+  updateQuantity,
 } from "../data/cart.js";
 import { products } from "../data/products.js";
 import { formatCurrency } from "./utils/money.js";
@@ -14,6 +15,7 @@ updateCheckoutCartQuantityDisplay();
 function attachEventListeners() {
   const deleteButtons = document.querySelectorAll(".delete-quantity-link");
   const updateLinks = document.querySelectorAll(".js-update-quantity-link");
+  const saveLinks = document.querySelectorAll(".js-save-quantity-link");
 
   updateLinks.forEach((link) => {
     link.addEventListener("click", () => {
@@ -21,7 +23,7 @@ function attachEventListeners() {
       console.log("productId", productId);
 
       const cartItemContainer = document.querySelector(
-        `js-cart-item-container-${productId}`
+        `.js-cart-item-container-${productId}`
       );
 
       cartItemContainer.classList.add("is-editing-quantity");
@@ -32,6 +34,23 @@ function attachEventListeners() {
     button.addEventListener("click", () => {
       const productId = button.dataset.productId;
       removeFromCart(productId);
+    });
+  });
+
+  saveLinks.forEach((link) => {
+    link.addEventListener("click", () => {
+      const productId = link.dataset.productId;
+      const cartItemContainer = document.querySelector(
+        `.js-cart-item-container-${productId}`
+      );
+      const quantityInput =
+        cartItemContainer.querySelector(".js-quantity-input");
+      const quantityLabel = cartItemContainer.querySelector(".quantity-label");
+
+      updateQuantity(productId, Number(quantityInput.value));
+      quantityLabel.innerText = Number(quantityInput.value);
+      cartItemContainer.classList.remove("is-editing-quantity");
+      updateCheckoutCartQuantityDisplay();
     });
   });
 }
@@ -75,12 +94,14 @@ function generateCartContentHTML(productsHTML) {
                       cartItem.quantity
                     }</span>
                   </span>
+                  <input type="number" class="quantity-input js-quantity-input" min="1" max="200" value="${
+                    cartItem.quantity
+                  }"/>
                   <span class="update-quantity-link link-primary js-update-quantity-link" data-product-id="${
                     matchingItem.id
                   }">
                     Update
                   </span>
-                  <input type="number" class="quantity-input js-quantity-input" min="1" max="200"/>
                   <span class="save-quantity-link link-primary js-save-quantity-link" data-product-id="${
                     matchingItem.id
                   }">Save</span>

@@ -215,6 +215,18 @@
 }
 
 .quantity-input,
-.save-quantity-link {
+.save-quantity-link,
+.is-editing-quantity .update-quantity-link {
+  display: none;
+}
+
+.is-editing-quantity .quantity-input,
+.is-editing-quantity .save-quantity-link,
+.update-quantity-link,
+.quantity-label {
+  display: initial;
+}
+
+.is-editing-quantity .quantity-label {
   display: none;
 }
