@@ -3,6 +3,8 @@ import {
   removeFromCart,
   updateCheckoutCartQuantityDisplay,
   updateQuantity,
+  updateDeliveryOption,
+  loadFromStorage,
 } from "../data/cart.js";
 import { products } from "../data/products.js";
 import { formatCurrency } from "./utils/money.js";
@@ -14,6 +16,14 @@ generateCartContentHTML(productsHTML);
 attachEventListeners(); //attachment of event listeners
 updateCheckoutCartQuantityDisplay();
 
+//function: generates delivery options HTML
+//takes in matchingItem ref to the product in products array and
+//cartItem ref to the product in cart array
+//returns delivery options HTML as a string
+//
+//to myself:
+//  when we reload the page, the delivery option is not saved
+//  and the chosen one unchecks itself and the default one is checked
 function generateDeliveryOptionsHTML(matchingItem, cartItem) {
   let deliveryOptionsHTML = "";
   const today = dayjs();
@@ -21,7 +31,6 @@ function generateDeliveryOptionsHTML(matchingItem, cartItem) {
   deliveryOptions.forEach((option) => {
     const deliveryDate = today.add(option.deliveryDays, "day");
     const formattedDate = deliveryDate.format("dddd, MMMM D");
-    console.log(option.priceCents);
     const formattedPrice =
       option.priceCents === 0
         ? "FREE"
@@ -34,7 +43,9 @@ function generateDeliveryOptionsHTML(matchingItem, cartItem) {
         <input type="radio" 
           ${isChecked}
           class="delivery-option-input"
-          name="delivery-option-${matchingItem.id}">
+          name="delivery-option-${matchingItem.id}"
+          data-option-id="${option.id}"
+          value="${option.id}">
         <div>
           <div class="delivery-option-date">
             ${formattedDate}
@@ -89,6 +100,17 @@ function attachEventListeners() {
       quantityLabel.innerText = Number(quantityInput.value);
       cartItemContainer.classList.remove("is-editing-quantity");
       updateCheckoutCartQuantityDisplay();
+    });
+  });
+
+  // Add delivery option change handler
+  document.querySelectorAll(".delivery-option-input").forEach((radio) => {
+    radio.addEventListener("change", (event) => {
+      const productId = event.target
+        .getAttribute("name")
+        .replace("delivery-option-", "");
+      const optionId = event.target.getAttribute("data-option-id");
+      updateDeliveryOption(productId, optionId);
     });
   });
 }
