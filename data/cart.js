@@ -1,5 +1,5 @@
 // Purpose: To store the cart data and functions to add and remove items from the cart.
-export const cart = JSON.parse(localStorage.getItem("cart")) || [];
+export let cart = loadFromStorage();
 
 // Add the product matching productId to the cart
 export function addToCart(productId) {
