@@ -20,6 +20,7 @@ export function addToCart(productId) {
     cart.push({
       productId,
       quantity: Number(selectElement.value),
+      deliveryOptionId: 1,
     });
   }
   localStorage.setItem("cart", JSON.stringify(cart));

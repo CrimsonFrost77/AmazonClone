@@ -7,11 +7,48 @@ import {
 import { products } from "../data/products.js";
 import { formatCurrency } from "./utils/money.js";
 import { deliveryOptions } from "../data/deliveryOptions.js";
+import dayjs from "http://unpkg.com/dayjs@1.11.10/esm/index.js";
 
 let productsHTML = "";
 generateCartContentHTML(productsHTML);
 attachEventListeners(); //attachment of event listeners
 updateCheckoutCartQuantityDisplay();
+
+function generateDeliveryOptionsHTML(matchingItem, cartItem) {
+  let deliveryOptionsHTML = "";
+  const today = dayjs();
+
+  deliveryOptions.forEach((option) => {
+    const deliveryDate = today.add(option.deliveryDays, "day");
+    const formattedDate = deliveryDate.format("dddd, MMMM D");
+    console.log(option.priceCents);
+    const formattedPrice =
+      option.priceCents === 0
+        ? "FREE"
+        : `$${formatCurrency(option.priceCents)} -`;
+
+    const isChecked = cartItem.deliveryOptionId === option.id ? "checked" : "";
+
+    deliveryOptionsHTML += `
+      <div class="delivery-option">
+        <input type="radio" 
+          ${isChecked}
+          class="delivery-option-input"
+          name="delivery-option-${matchingItem.id}">
+        <div>
+          <div class="delivery-option-date">
+            ${formattedDate}
+          </div>
+          <div class="delivery-option-price">
+            ${formattedPrice} Shipping
+          </div>
+        </div>
+      </div>
+    `;
+  });
+
+  return deliveryOptionsHTML;
+}
 
 function attachEventListeners() {
   const deleteButtons = document.querySelectorAll(".delete-quantity-link");
@@ -71,9 +108,9 @@ function generateCartContentHTML(productsHTML) {
 
     //generate products HTML for checkout page
     productsHTML += `
-          <div class="cart-item-container js-cart-item-container-${
-            cartItem.productId
-          }">
+         <div class="cart-item-container js-cart-item-container-${
+           cartItem.productId
+         }">
             <div class="delivery-date">
               Delivery date: Tuesday, June 21
             </div>
@@ -118,45 +155,7 @@ function generateCartContentHTML(productsHTML) {
                 <div class="delivery-options-title">
                   Choose a delivery option:
                 </div>
-                <div class="delivery-option">
-                  <input type="radio" checked
-                    class="delivery-option-input"
-                    name="delivery-option-${cartItem.productId}">
-                  <div>
-                    <div class="delivery-option-date">
-                      Tuesday, June 21
-                    </div>
-                    <div class="delivery-option-price">
-                      FREE Shipping
-                    </div>
-                  </div>
-                </div>
-                <div class="delivery-option">
-                  <input type="radio"
-                    class="delivery-option-input"
-                    name="delivery-option-${cartItem.productId}">
-                  <div>
-                    <div class="delivery-option-date">
-                      Wednesday, June 15
-                    </div>
-                    <div class="delivery-option-price">
-                      $4.99 - Shipping
-                    </div>
-                  </div>
-                </div>
-                <div class="delivery-option">
-                  <input type="radio"
-                    class="delivery-option-input"
-                    name="delivery-option-${cartItem.productId}">
-                  <div>
-                    <div class="delivery-option-date">
-                      Monday, June 13
-                    </div>
-                    <div class="delivery-option-price">
-                      $9.99 - Shipping
-                    </div>
-                  </div>
-                </div>
+                ${generateDeliveryOptionsHTML(matchingItem, cartItem)}
               </div>
             </div>
           </div>
