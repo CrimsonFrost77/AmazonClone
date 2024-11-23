@@ -41,8 +41,8 @@ function generateDeliveryOptionsHTML(matchingItem, cartItem) {
     deliveryOptionsHTML += `
       <div class="delivery-option">
         <input type="radio" 
-          ${isChecked}
           class="delivery-option-input"
+          ${isChecked}
           name="delivery-option-${matchingItem.id}"
           data-option-id="${option.id}"
           value="${option.id}">
@@ -103,14 +103,14 @@ function attachEventListeners() {
     });
   });
 
-  // Add delivery option change handler
+  // delivery option change handler
   document.querySelectorAll(".delivery-option-input").forEach((radio) => {
     radio.addEventListener("change", (event) => {
       const productId = event.target
         .getAttribute("name")
         .replace("delivery-option-", "");
       const optionId = event.target.getAttribute("data-option-id");
-      updateDeliveryOption(productId, optionId);
+      updateDeliveryOption(Number(productId), optionId);
     });
   });
 }
